@@ -34,16 +34,37 @@
   </div>
 </template>
 
+<!-- <script>
+export default {
+  beforeRouteEnter(to, from) {
+    console.log("Before Route enter");
+  },
+};
+</script> -->
+
 <script setup>
-import { onMounted, ref } from "vue";
-import { useRouter } from "vue-router";
+import { inject, onMounted, ref } from "vue";
+import { onBeforeRouteLeave, useRouter } from "vue-router";
 
 const posts = ref([]);
 
 const router = useRouter();
 
+onBeforeRouteLeave((to, from) => {
+  console.log("OnBefore ROute Leave");
+});
+
+// checkForAccess();
+
+// function checkForAccess() {
+//   router.push({ path: "/" });
+// }
+
 onMounted(() => {
-  fetchPosts();
+  //   setTimeout(() => {
+  //     fetchPosts();
+  //   }, 3000);
+  posts.value = inject("postData");
 });
 
 const fetchPosts = async () => {

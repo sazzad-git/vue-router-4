@@ -14,23 +14,34 @@
 </template>
 
 <script setup>
-import { ref, watchEffect } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { ref } from "vue";
+import { onBeforeRouteUpdate, useRoute, useRouter } from "vue-router";
 
 const route = useRoute();
 const router = useRouter();
 
+const props = defineProps({
+  id: String,
+});
+console.log(props);
+console.log(route.params);
+
 const post = ref(null);
 
-const getPost = async () => {
+const getPost = async (id) => {
   const response = await fetch(
-    `https://jsonplaceholder.typicode.com/posts/${route.params.id}`
+    `https://jsonplaceholder.typicode.com/posts/${id}`
   );
   post.value = await response.json();
 };
 
+getPost(props.id);
+onBeforeRouteUpdate((to, from) => {
+  getPost(to.params.id);
+});
+
 // watch(() => route.params, getPost, { immediate: true });
-watchEffect(getPost);
+// watchEffect(getPost);
 
 // getPost();
 
