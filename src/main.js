@@ -29,7 +29,7 @@ const routes = [
   {
     path: "/",
     component: Home,
-    props: { name: "Sazzad web dev" },
+    // props: { name: "Sazzad web dev" },
     // beforeEnter(to, from) {
     //   console.log("Before Enter");
     // },
